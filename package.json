@@ -9,9 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.22.15",
-    "@babel/preset-typescript": "^7.23.2",
-    "@babel/standalone": "^7.23.2",
+    "@babel/standalone": "7.0.0",
     "next": "13.5.5",
     "prism-code-editor": "^1.2.2",
     "prismjs": "^1.29.0",

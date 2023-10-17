@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import * as Storage from "../utils/storage";
 import IDE from "./ide";
 import NavItem from "./nav-item";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 
 const files: Record<string, string> = {
     "index.css": "* {\n\tbox-sizing: border-box;\n}\n\nhtml {\n\tfont-family: sans-serif;\n}",

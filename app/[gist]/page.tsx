@@ -35,7 +35,7 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
     const content: Record<string, string> = {};
 
     for (const file in files) {
-        content[file] = files.content;
+        content[file] = files[file].content;
     }
 
     return access

@@ -52,8 +52,6 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                             onKeyDown={e => {
                                 if (e.key === "Enter") {
                                     onCreatedFile!(newFile);
-                                    setTabs([...tabs, newFile]);
-                                    setFile(newFile);
                                     setNewFile(null);
                                 }
                             }}

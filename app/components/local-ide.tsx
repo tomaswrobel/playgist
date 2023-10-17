@@ -49,7 +49,7 @@ export default function LocalIDE(props: Record<"auth", boolean>) {
                     }).then(res => res.json()).then(res => router.push("/" + res.id))}
                 >Save as Gist</NavItem>
             ) : (
-                <NavItem href="/login">Login</NavItem>
+                <NavItem href="/api/login">Login</NavItem>
             )}
         </IDE>
     );

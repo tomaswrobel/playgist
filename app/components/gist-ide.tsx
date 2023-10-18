@@ -1,12 +1,13 @@
 "use client";
 
 import IDE from "./ide";
-import {useRef} from "react";
 import NavItem from "./nav-item";
+import {useRef, useState} from "react";
 
 function GistIDE(props: GistIDE.Props) {
     const updateTimeout = useRef(0);
     const files = useRef(props.files);
+    const [, setUpdate] = useState(0);
 
     return (
         <IDE
@@ -27,15 +28,14 @@ function GistIDE(props: GistIDE.Props) {
                         },
                         body: JSON.stringify({
                             gist: props.gist,
-                            files: files.current
+                            files: {
+                                [file]: {content}
+                            }
                         })
                     });
                 }, 1000) as unknown as number;
             }}
             onCreatedFile={file => {
-                const newState = {...files.current};
-                newState[file] = "";
-
                 fetch("/api/update", {
                     method: "POST",
                     headers: {
@@ -43,11 +43,18 @@ function GistIDE(props: GistIDE.Props) {
                     },
                     body: JSON.stringify({
                         gist: props.gist,
-                        files: newState
+                        files: {
+                            [file]: {
+                                content: ""
+                            }
+                        }
                     })
-                });
+                }).then(() => setUpdate(n => n + 1));
 
-                files.current = newState;
+                files.current = {
+                    ...files.current,
+                    [file]: ""
+                };
             }}
             onDeletedFile={file => {
                 const newState = {...files.current};
@@ -61,11 +68,12 @@ function GistIDE(props: GistIDE.Props) {
                     body: JSON.stringify({
                         gist: props.gist,
                         files: {
-                            ...newState,
-                            [file]: null
+                            [file]: {
+                                content: null
+                            }
                         }
                     })
-                });
+                }).then(() => setUpdate(n => n + 1));
 
                 files.current = newState;
             }}

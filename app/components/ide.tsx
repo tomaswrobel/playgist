@@ -62,15 +62,16 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     </span>
                 )}
             </nav>
-            <div className="flex flex-col flex-grow">
+            <div className="flex flex-col flex-1 overflow-auto">
                 <nav className="flex bg-[#383933] select-none">
                     {tabs.map(tab => (
                         <div key={"tab-" + tab} className={`color-[#c9d1d9] p-2 ${tab === file ? "bg-[#272822]" : ""}`} onClick={() => setFile(tab)}>
                             <FileIcon file={tab} />
                             {tab}
                             <span className="ml-2.5 cursor-pointer" onClick={() => {
-                                setFile(tabs[tabs.length - 2] || null);
-                                setTabs(tabs.filter(s => s !== tab));
+                                const newTabs = tabs.filter(s => s !== tab);
+                                setFile(newTabs[newTabs.length - 1] || null);
+                                setTabs(tabs);
                             }}>
                                 ×
                             </span>
@@ -89,7 +90,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
             </div>
             <iframe
                 src="about:blank"
-                className="flex-grow border-0 bg-white"
+                className="flex-1 border-0 bg-white"
                 name="output"
                 onLoad={e => e.currentTarget.contentDocument && transpile(e.currentTarget.contentDocument, files)}
             />

@@ -36,12 +36,14 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                             {file}
                         </span>
                         <div className="flex-grow" />
-                        <span className="font-[fontello] inline-block antialiased" onClick={() => {
-                            if (tabs.includes(file)) {
-                                setTabs(tabs.filter(s => s !== file));
-                            }
-                            onDeletedFile!(file);
-                        }}>&#xe800;</span>
+                        {readOnly || (
+                            <span className="font-[fontello] inline-block antialiased" onClick={() => {
+                                if (tabs.includes(file)) {
+                                    setTabs(tabs.filter(s => s !== file));
+                                }
+                                onDeletedFile!(file);
+                            }}>&#xe800;</span>
+                        )}
                     </a>
                 ))}
                 {newFile === null || (

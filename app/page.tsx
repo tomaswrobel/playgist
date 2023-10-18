@@ -1,9 +1,8 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import * as Storage from "../utils/storage";
-import IDE from "./ide";
-import NavItem from "./nav-item";
+import * as Storage from "./utils/storage";
+import IDE from "./components/ide";
 
 const files: Record<string, string> = {
     "index.css": "* {\n\tbox-sizing: border-box;\n}\n\nhtml {\n\tfont-family: sans-serif;\n}",

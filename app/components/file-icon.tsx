@@ -1,9 +1,9 @@
 const extensions = new Map<string, [string, string]>([
-    ["css", ["\ue804", "#42a5f5"]],
+    ["css", ["\ue805", "#42a5f5"]],
     ["tsx", ["\ue803", "#0288d1"]],
     ["jsx", ["\ue803", "#00bcd4"]],
     ["js", ["\ue804", "#ffca28"]],
-    ["ts", ["\ue802", "#ffca28"]],
+    ["ts", ["\ue802", "#0288d1"]],
 ]);
 
 function FileIcon(props: FileIcon.Props) {

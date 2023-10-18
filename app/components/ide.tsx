@@ -28,9 +28,11 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     <a key={"nav-" + file} className="text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-flex gap-2" onClick={() => {
                         setTabs([...tabs, file]);
                         setFile(file);
-                    }}>
+                    }} title={file}>
                         <FileIcon file={file} />
-                        {file}
+                        <span className="text-ellipsis overflow-hidden whitespace-pre">
+                            {file}
+                        </span>
                         <div className="flex-grow" />
                         <span className="font-[fontello] inline-block antialiased" onClick={() => {
                             if (tabs.includes(file)) {

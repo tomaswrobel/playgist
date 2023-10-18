@@ -14,7 +14,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
     const [tabs, setTabs] = useState<string[]>([]);
     const [newFile, setNewFile] = useState<string | null>(null);
 
-    const hasTab = file in files;
+    const hasTab = !!file && file in files;
 
     return (
         <div className="flex flex-grow h-screen w-screen font-sans">

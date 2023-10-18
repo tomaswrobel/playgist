@@ -6,19 +6,13 @@ import {useRef, useState} from "react";
 
 function GistIDE(props: GistIDE.Props) {
     const updateTimeout = useRef(0);
-    const files = useRef(props.files);
-    const [, setUpdate] = useState(0);
+    const [files, setFiles] = useState(props.files);
 
     return (
         <IDE
-            files={files.current}
+            files={files}
             readOnly={true}
             onFileChange={(file, content) => {
-                files.current = {
-                    ...files.current,
-                    [file]: content
-                };
-
                 clearTimeout(updateTimeout.current);
                 updateTimeout.current = setTimeout(() => {
                     fetch("/api/update", {
@@ -34,9 +28,14 @@ function GistIDE(props: GistIDE.Props) {
                         })
                     });
                 }, 1000) as unknown as number;
+
+                setFiles({
+                    ...files,
+                    [file]: content
+                });
             }}
-            onCreatedFile={file => {
-                fetch("/api/update", {
+            onCreatedFile={async file => {
+                await fetch("/api/update", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -49,18 +48,18 @@ function GistIDE(props: GistIDE.Props) {
                             }
                         }
                     })
-                }).then(() => setUpdate(n => n + 1));
+                });
 
-                files.current = {
-                    ...files.current,
+                setFiles({
+                    ...files,
                     [file]: ""
-                };
+                });
             }}
-            onDeletedFile={file => {
-                const newState = {...files.current};
+            onDeletedFile={async file => {
+                const newState = {...files};
                 delete newState[file];
 
-                fetch("/api/update", {
+                await fetch("/api/update", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -73,9 +72,9 @@ function GistIDE(props: GistIDE.Props) {
                             }
                         }
                     })
-                }).then(() => setUpdate(n => n + 1));
+                });
 
-                files.current = newState;
+                setFiles(newState);
             }}
         >
             <NavItem href={`https://gist.github.com/${props.gist}`} target="_blank">View on GitHub</NavItem>

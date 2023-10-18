@@ -82,7 +82,7 @@ function GistIDE(props: GistIDE.Props) {
                 {Object.entries(files).map(([file, content], i) => (
                     <input type="hidden" name={file} value={content} key={i} />
                 ))}
-                <button type="submit" className="appearance-none bg-transparent text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block">
+                <button type="submit" className="appearance-none bg-transparent text-[#c9d1d9] text-left cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block">
                     Save as a Gist
                 </button>
             </form>

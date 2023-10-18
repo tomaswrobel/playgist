@@ -26,7 +26,7 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
     if (token) {
         const {login} = await fetch("https://api.github.com/user", {
             method: "GET",
-            headers
+            headers,
         }).then((response) => response.json());
         
         access = login === owner.login;

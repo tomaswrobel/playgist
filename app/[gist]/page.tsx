@@ -1,5 +1,4 @@
 import {cookies} from "next/headers";
-import IDE from "../components/ide";
 import GistIDE from "../components/gist-ide";
 
 export default async function GistPage(props: {params: Record<"gist", string>}) {
@@ -28,7 +27,6 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
             method: "GET",
             headers,
         }).then((response) => response.json());
-        console.log(owner, login, owner.login)
         access = login === owner.login;
     } 
     
@@ -38,8 +36,5 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
         content[file] = files[file].content;
     }
 
-    return access
-        ? <GistIDE gist={props.params.gist} files={content} /> 
-        : <IDE files={content} readOnly />
-    ;
+    <GistIDE gist={props.params.gist} files={content} readOnly={access} />;
 }

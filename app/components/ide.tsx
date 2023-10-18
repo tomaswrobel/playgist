@@ -19,7 +19,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
     return (
         <div className="flex flex-grow h-screen w-screen font-sans">
             <nav className="flex bg-[#272922] flex-col m-0 p-0 overflow-x-hidden overflow-y-auto w-[200px] border-solid border-r border-[#00000026]">
-                <NavItem href="https://github.com/tomas-wrobel/playgist">Star on GitHub</NavItem>
+                <NavItem href="https://github.com/tomas-wrobel/playgist">View PlayGist's source code</NavItem>
                 <NavDivider />
                 {children}
                 <a className="text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block" onClick={() => {
@@ -28,8 +28,10 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                 <NavDivider />
                 {Object.keys(files).map(file => (
                     <a key={"nav-" + file} className="text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-flex gap-2" onClick={() => {
-                        setTabs([...tabs, file]);
-                        setFile(file);
+                        if (tabs.indexOf(file) === -1) {
+                            setTabs([...tabs, file]);
+                            setFile(file);
+                        }
                     }} title={file}>
                         <FileIcon file={file} />
                         <span className="text-ellipsis overflow-hidden whitespace-pre">

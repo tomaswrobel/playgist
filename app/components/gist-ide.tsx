@@ -11,7 +11,7 @@ function GistIDE(props: GistIDE.Props) {
     return (
         <IDE
             files={files}
-            readOnly={true}
+            readOnly={props.readOnly}
             onFileChange={(file, content) => {
                 clearTimeout(updateTimeout.current);
                 updateTimeout.current = setTimeout(() => {
@@ -78,6 +78,14 @@ function GistIDE(props: GistIDE.Props) {
             }}
         >
             <NavItem href={`https://gist.github.com/${props.gist}`} target="_blank">View on GitHub</NavItem>
+            <form action="/api/save" method="POST" className="contents">
+                {Object.entries(files).map(([file, content]) => (
+                    <input type="hidden" name={file} value={content} />
+                ))}
+                <button type="submit" className="appearance-none bg-transparent text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block">
+                    Save as a Gist
+                </button>
+            </form>
         </IDE>
     );
 }
@@ -85,6 +93,7 @@ function GistIDE(props: GistIDE.Props) {
 declare namespace GistIDE {
     interface Props {
         gist: string;
+        readOnly: boolean;
         files: Record<string, string>;
     }
 }

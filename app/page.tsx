@@ -36,8 +36,8 @@ export default function LocalIDE() {
             }}
         >
             <form action="/api/save" method="POST" className="contents">
-                {Object.entries(files).map(([file, content]) => (
-                    <input type="hidden" name={file} value={content} />
+                {Object.entries(files).map(([file, content], i) => (
+                    <input type="hidden" name={file} value={content} key={i} />
                 ))}
                 <button type="submit" className="appearance-none bg-transparent text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block">
                     Save as a Gist

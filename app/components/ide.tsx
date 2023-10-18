@@ -14,6 +14,8 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
     const [tabs, setTabs] = useState<string[]>([]);
     const [newFile, setNewFile] = useState<string | null>(null);
 
+    const hasTab = file in files;
+
     return (
         <div className="flex flex-grow h-screen w-screen font-sans">
             <nav className="flex bg-[#272922] flex-col m-0 p-0 overflow-x-hidden overflow-y-auto w-[200px] border-solid border-r border-[#00000026]">
@@ -81,9 +83,9 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     <a className="text-[#c9d1d9] cursor-pointer no-underline p-2 inline-block" href="about:blank" target="output">Run</a>
                 </nav>
                 <CodeEditor
-                    language={file ? fileTypeLanguage(file) : "plain"}
-                    value={file ? files[file] : "Open a file to edit it."}
-                    readOnly={!file || readOnly}
+                    language={hasTab ? fileTypeLanguage(file) : "plain"}
+                    value={hasTab ? files[file] : "Open a file to edit it."}
+                    readOnly={!hasTab || readOnly}
                     onUpdate={value => file && onFileChange(file, value)}
                     tabSize={4}
                 />

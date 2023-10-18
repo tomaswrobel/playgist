@@ -30,11 +30,6 @@ export default function PrismEditorReact(props: Partial<EditorOptions>) {
                 const div = divRef.current!;
                 editorRef.current = createEditor(Prism, div, props);
             }
-            if (props.readOnly) {
-                divRef.current!.style.pointerEvents = "none";
-            } else {
-                divRef.current!.style.pointerEvents = "";
-            }
         },
         [props]
     );

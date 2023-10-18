@@ -28,7 +28,7 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
             method: "GET",
             headers,
         }).then((response) => response.json());
-        
+        console.log(owner, login, owner.login)
         access = login === owner.login;
     } 
     

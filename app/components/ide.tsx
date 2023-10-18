@@ -1,13 +1,15 @@
 "use client";
 
 import {useState, type ReactNode} from "react";
-import CodeEditor from "./code-editor";
 import fileTypeLanguage from "../utils/file-type";
 import FileIcon from "./file-icon";
 import {transpile} from "../utils/transpile";
 import "../font/fontello.css";
 import NavItem from "./nav-item";
 import NavDivider from "./nav-divider";
+import dynamic from 'next/dynamic';
+
+const CodeEditor = dynamic(() => import("./code-editor"), {ssr: false});
 
 function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = () => {}, onFileChange = () => {}}: IDE.Props) {
     const [file, setFile] = useState<string | null>(null);

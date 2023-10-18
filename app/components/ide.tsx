@@ -66,7 +66,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
             </nav>
             <div className="flex flex-col flex-1 overflow-auto">
                 <nav className="flex bg-[#383933] select-none">
-                    {tabs.map(tab => (
+                    {hasTab && tabs.map(tab => (
                         <div key={"tab-" + tab} className={`color-[#c9d1d9] p-2 ${tab === file ? "bg-[#272822]" : ""}`} onClick={() => setFile(tab)}>
                             <FileIcon file={tab} />
                             {tab}

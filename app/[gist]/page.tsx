@@ -36,5 +36,5 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
         content[file] = files[file].content;
     }
 
-    return <GistIDE gist={props.params.gist} files={content} readOnly={access} />;
+    return <GistIDE gist={props.params.gist} files={content} readOnly={!access} />;
 }

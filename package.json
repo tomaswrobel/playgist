@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.20.2",
     "@types/babel__standalone": "^7.1.5",
+    "@types/less": "^3.0.5",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.2",
     "@types/react": "^18",

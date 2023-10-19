@@ -2,25 +2,43 @@
 
 PlayGist is a web-based code fiddle tool that allows you to open, modify, and run GitHub Gists effortlessly. Whether you want to experiment with code snippets, collaborate on projects, or simply run and test code from GitHub Gists, PlayGist makes it simple and efficient.
 
-## Features
+## Client × Server
 
-### 1. Open GitHub Gists
-Easily access and open any public GitHub Gist by typing the URL in the format `playgist.dev/GIST_ID`. PlayGist provides a clean and user-friendly interface to view and interact with Gists.
+This happens on the client:
 
-### 2. Edit Code
-PlayGist allows you to modify the code in a Gist. The built-in code editor supports various programming languages and offers features like syntax highlighting, autocompletion, and code indentation to enhance your coding experience.
+* Code transpilation
+* Code execution
 
-### 3. Run Code
-You can execute the modified code directly within PlayGist to see the results. It's a convenient way to test code snippets and experiment with different inputs and outputs.
+This happens on the server:
 
-### 4. Share Gists
-Share the modified Gist with others using a unique URL. Collaboration is made easy, as you can work together on code and share your progress seamlessly.
+* NPM Packages transpilation ([esm.sh](https://esm.sh))
+* GitHub integration ([playgist.dev](https://playgist.dev))
+* Storage ([gist.github.com](https://gist.github.com))
 
-### 5. Syntax Highlighting
-PlayGist provides syntax highlighting for a wide range of programming languages, making it easier to read and write code.
+## Supported languages
 
-### 6. GitHub Integration
-Sign in with your GitHub account to access and manage your own Gists directly from PlayGist.
+| Name       | Extensions    |
+| ---------- | ------------- |
+| JavaScript | `.js`, `.jsx` |
+| TypeScript | `.ts`, `.tsx` |
+| CSS        | `.css`        |
+
+## Supported patterns
+
+* ECMAScript imports:
+    * NPM modules
+    * Local files
+* Dynamic 
+
+## Unsupported patterns
+
+* Folders
+* CommonJS
+* HTML files
+* Images, fonts, etc.
+* CSS modules
+* CSS relative imports
+* CSS preprocessors
 
 ## Getting Started
 

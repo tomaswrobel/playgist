@@ -37,7 +37,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                         </span>
                         <div className="flex-grow" />
                         {readOnly || (
-                            <span className="font-[fontello] inline-block antialiased" onClick={() => { 
+                            <span className="font-[fontello] inline-block antialiased" onClick={() => {
                                 if (current === file) {
                                     setCurrent(null);
                                 }
@@ -50,23 +50,31 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     </a>
                 ))}
                 {newFile === null || (
-                    <span className="text-[#c9d1d9] no-underline p-2.5 inline-flex gap-2">
+                    <form className="text-[#c9d1d9] no-underline p-2.5 inline-flex gap-2 items-center" onSubmit={e => {
+                        e.preventDefault();
+                        onCreatedFile!(newFile);
+                        setTabs([...tabs, newFile]);
+                        setCurrent(newFile);
+                        setNewFile(null);
+                    }}>
                         <FileIcon file={newFile} />
                         <input
-                            className="bg-[#383933] text-[#c9d1d9] border-solid border border-[#00000026] rounded w-full"
+                            required
+                            name="file"
+                            pattern="^[\w\-\.]+\.(css|[tj]sx?)$"
+                            className="bg-[#383933] text-[#c9d1d9] text-sm border-0 outline-none rounded p-1 w-full"
                             autoFocus
                             placeholder="New file..."
                             value={newFile}
                             onChange={e => setNewFile(e.currentTarget.value)}
                             onKeyDown={e => {
-                                if (e.key === "Enter") {
-                                    onCreatedFile!(newFile);
+                                if (e.key === "Escape") {
                                     setNewFile(null);
                                 }
                             }}
                             onBlur={() => setNewFile(null)}
                         />
-                    </span>
+                    </form>
                 )}
             </nav>
             <div className="flex flex-col flex-1 overflow-auto">
@@ -77,7 +85,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                             {tab}
                             <span className="ml-2.5 cursor-pointer" onClick={e => {
                                 e.stopPropagation();
-                                
+
                                 const newTabs = tabs.filter(s => s !== tab);
                                 setCurrent(newTabs[newTabs.length - 1] || null);
                                 setTabs(newTabs);
@@ -100,7 +108,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                 src="about:blank"
                 className="flex-1 border-0 bg-white"
                 name="output"
-                onLoad={e => e.currentTarget.contentDocument && transpile(e.currentTarget.contentDocument, files)}
+                onLoad={e => e.currentTarget.contentDocument && e.currentTarget.src === "about:blank" && transpile(e.currentTarget.contentDocument, files)}
             />
         </div>
     );

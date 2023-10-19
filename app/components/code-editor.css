@@ -4,7 +4,6 @@
     display: grid;
     grid-template-areas: "nums pre";
     grid-template-columns: auto 1fr;
-    background: #272822;
     gap: 2px;
 }
 
@@ -23,6 +22,11 @@
     user-select: none;
     position: sticky;
     left: 0;
+}
+
+.code-editor pre,
+.code-editor .nums {
+    background: #272822;
 }
 
 .code-editor textarea,

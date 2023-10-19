@@ -1,3 +1,43 @@
-.prism-editor {
-    height: 100%;
+.code-editor {
+    flex: 1;
+    overflow: auto;
+    display: grid;
+    grid-template-areas: "nums pre";
+    grid-template-columns: auto 1fr;
+    background: #272822;
+    gap: 2px;
+}
+
+.code-editor textarea,
+.code-editor pre {
+    all: unset;
+    overflow: unset !important;
+    grid-area: pre;
+    white-space: pre !important;
+}
+
+.code-editor .nums {
+    grid-area: nums;
+    color: #F8F8F2aa;
+    text-align: right;
+    user-select: none;
+    position: sticky;
+    left: 0;
+}
+
+.code-editor textarea,
+.code-editor pre,
+.code-editor .nums  {
+    font-family: monospace !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    tab-size: 4 !important;
+    padding: 3px 5px !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+.code-editor textarea {
+    caret-color: #c9d1d9;
+    -webkit-text-fill-color: transparent;
 }

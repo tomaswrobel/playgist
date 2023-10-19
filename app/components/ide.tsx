@@ -7,20 +7,16 @@ import {transpile} from "../utils/transpile";
 import "../font/fontello.css";
 import NavItem from "./nav-item";
 import NavDivider from "./nav-divider";
-import dynamic from 'next/dynamic';
-
-const CodeEditor = dynamic(() => import("./code-editor"), {ssr: false});
+import CodeEditor from "./code-editor";
 
 function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = () => {}, onFileChange = () => {}}: IDE.Props) {
-    const [file, setFile] = useState<string | null>(null);
+    const [current, setCurrent] = useState<string | null>(null);
     const [tabs, setTabs] = useState<string[]>([]);
     const [newFile, setNewFile] = useState<string | null>(null);
 
-    const hasTab = !!file && file in files;
-
     return (
         <div className="flex flex-grow h-screen w-screen font-sans">
-            <nav className="flex bg-[#272922] flex-col m-0 p-0 overflow-x-hidden overflow-y-auto w-[200px] border-solid border-r border-[#00000026]">
+            <nav suppressHydrationWarning className="flex bg-[#272922] flex-col m-0 p-0 overflow-x-hidden overflow-y-auto w-[200px] border-solid border-r border-[#00000026]">
                 <NavItem href="https://github.com/tomas-wrobel/playgist">PlayGist on GitHub</NavItem>
                 <NavDivider />
                 {children}
@@ -32,8 +28,8 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     <a key={"nav-" + file} className="text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-flex gap-2" onClick={() => {
                         if (tabs.indexOf(file) === -1) {
                             setTabs([...tabs, file]);
-                            setFile(file);
                         }
+                        setCurrent(file);
                     }} title={file}>
                         <FileIcon file={file} />
                         <span className="text-ellipsis overflow-hidden whitespace-pre">
@@ -41,7 +37,10 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                         </span>
                         <div className="flex-grow" />
                         {readOnly || (
-                            <span className="font-[fontello] inline-block antialiased" onClick={() => {
+                            <span className="font-[fontello] inline-block antialiased" onClick={() => { 
+                                if (current === file) {
+                                    setCurrent(null);
+                                }
                                 if (tabs.includes(file)) {
                                     setTabs(tabs.filter(s => s !== file));
                                 }
@@ -72,14 +71,16 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
             </nav>
             <div className="flex flex-col flex-1 overflow-auto">
                 <nav className="flex bg-[#383933] select-none">
-                    {hasTab && tabs.map(tab => (
-                        <div key={"tab-" + tab} className={`color-[#c9d1d9] p-2 ${tab === file ? "bg-[#272822]" : ""}`} onClick={() => setFile(tab)}>
+                    {tabs.map(tab => (
+                        <div key={"tab-" + tab} className={`color-[#c9d1d9] p-2 ${tab === current ? "bg-[#272822]" : ""}`} onClick={() => setCurrent(tab)}>
                             <FileIcon file={tab} />
                             {tab}
-                            <span className="ml-2.5 cursor-pointer" onClick={() => {
+                            <span className="ml-2.5 cursor-pointer" onClick={e => {
+                                e.stopPropagation();
+                                
                                 const newTabs = tabs.filter(s => s !== tab);
-                                setFile(newTabs[newTabs.length - 1] || null);
-                                setTabs(tabs);
+                                setCurrent(newTabs[newTabs.length - 1] || null);
+                                setTabs(newTabs);
                             }}>
                                 ×
                             </span>
@@ -89,11 +90,10 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                     <a className="text-[#c9d1d9] cursor-pointer no-underline p-2 inline-block" href="about:blank" target="output">Run</a>
                 </nav>
                 <CodeEditor
-                    language={hasTab ? fileTypeLanguage(file) : "plain"}
-                    value={hasTab ? files[file] : "Open a file to edit it."}
-                    readOnly={!hasTab || readOnly}
-                    onUpdate={value => file && onFileChange(file, value)}
-                    tabSize={4}
+                    language={current ? fileTypeLanguage(current) : "plain"}
+                    code={current ? files[current] : ""}
+                    readonly={!current || readOnly}
+                    onChange={value => current && onFileChange(current, value)}
                 />
             </div>
             <iframe

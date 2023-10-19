@@ -1,38 +1,43 @@
 "use client";
 
-import {useEffect, useRef} from "react";
-import {type PrismEditor, createEditor, EditorOptions} from "prism-code-editor";
-import Prism from "prism-code-editor/prism-core";
-
-import "prismjs/components/prism-markup.js";
-import "prismjs/components/prism-clike.js";
-import "prismjs/components/prism-javascript.js";
+import Prism from "prismjs";
 import "prismjs/components/prism-typescript.js";
 import "prismjs/components/prism-jsx.js";
 import "prismjs/components/prism-tsx.js";
-import "prismjs/components/prism-css.js";
-
-import "prism-code-editor/layout.css";
-import "prism-code-editor/scrollbar.css";
-import "prism-code-editor/themes/prism-okaidia.css";
+import "prismjs/themes/prism-okaidia.css";
 
 import "./code-editor.css";
 
-export default function PrismEditorReact(props: Partial<EditorOptions>) {
-    const divRef = useRef<HTMLDivElement>(null);
-    const editorRef = useRef<PrismEditor>();
-
-    useEffect(
-        () => {
-            if (editorRef.current) {
-                editorRef.current.setOptions(props);
-            } else {
-                const div = divRef.current!;
-                editorRef.current = createEditor(Prism, div, props);
-            }
-        },
-        [props]
-    );
-
-    return <div className="prism-editor-react h-full" ref={divRef} />;
+function CodeEditor({code = "", onChange, readonly = false, language}: CodeEditor.Props) {
+    return (
+        <div className="code-editor">
+            <div className="nums">
+                {code.split("\n").map((_, i) => <div key={i}>{i + 1}</div>)}
+            </div>
+            <pre dangerouslySetInnerHTML={{__html: Prism.highlight(code, Prism.languages[language], language)}} />
+            {readonly || (
+                <textarea
+                    value={code}
+                    onChange={e => onChange(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === "Tab") {
+                            e.preventDefault();
+                            document.execCommand("insertText", false, "\t");
+                        }
+                    }}
+                />
+            )}
+        </div>
+    )
 };
+
+declare namespace CodeEditor {
+    interface Props {
+        code?: string;
+        onChange: (code: string) => void;
+        readonly?: boolean;
+        language: string;
+    }
+}
+
+export default CodeEditor;

@@ -56,12 +56,6 @@ export function transpile(document: Document, files: Record<string, string>) {
             imports[`local/${filename}`] = URL.createObjectURL(
                 new File([js.code || ""], filename, {type: "text/javascript"})
             );
-        } else if (ext === "json") {
-            imports[`local/${filename}`] = URL.createObjectURL(
-                new File([content], filename, {
-                    type: "application/json",
-                })
-            );
         } else if (ext === "css") {
             imports[`local/${filename}`] = URL.createObjectURL(
                 new File(
@@ -87,7 +81,7 @@ export function transpile(document: Document, files: Record<string, string>) {
             imports["init"] = `data:application/javascript,${encodeURIComponent('import "local/index.jsx";')}`;
             break;
         default:
-            imports["init"] = `data:application/javascript,${encodeURIComponent('throw "No entry point found. Try to create index.js, index.ts, index.jsx or index.tsx.");')}`;
+            imports["init"] = `data:application/javascript,${encodeURIComponent('throw "No entry point found. Try to create index.js, index.ts, index.jsx or index.tsx.";')}`;
             break;
     }
 

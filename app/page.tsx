@@ -10,8 +10,17 @@ const files: Record<string, string> = {
 };
 
 export default function LocalIDE() {
-    const [state, setState] = useState(Storage.get("files", files));
-    useEffect(() => Storage.set("files", state), [state]);
+    const [state, setState] = useState(files);
+    
+    useEffect(() => setState(Storage.get("files", files)), []);
+    useEffect(
+        () => {
+            if (state !== files) {
+                Storage.set("files", state)
+            }
+        }, 
+        [state]
+    );
 
     return (
         <IDE

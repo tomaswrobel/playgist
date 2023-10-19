@@ -436,10 +436,10 @@
   dependencies:
     undici-types "~5.25.1"
 
-"@types/prismjs@^1.26.0":
-  version "1.26.1"
-  resolved "https://registry.yarnpkg.com/@types/prismjs/-/prismjs-1.26.1.tgz#aae6739d8f0d14a3bc9e6dd83e6d791ad75d4d76"
-  integrity sha512-Q7jDsRbzcNHIQje15CS/piKhu6lMLb9jwjxSfEIi4KcFKXW23GoJMkwQiJ8VObyfx+VmUaDcJxXaWN+cTCjVog==
+"@types/prismjs@^1.26.2":
+  version "1.26.2"
+  resolved "https://registry.yarnpkg.com/@types/prismjs/-/prismjs-1.26.2.tgz#f574066903a7f0d516353581185db74326100edc"
+  integrity sha512-/r7Cp7iUIk7gts26mHXD66geUC+2Fo26TZYjQK6Nr4LDfi6lmdRmMqM0oPwfiMhUwoBAOFe8GstKi2pf6hZvwA==
 
 "@types/prop-types@*":
   version "15.7.8"
@@ -2225,13 +2225,6 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
-
-prism-code-editor@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/prism-code-editor/-/prism-code-editor-1.2.2.tgz#a234bb203f72364ab6d7b378c166ea7e9f006327"
-  integrity sha512-jmVlSNCp40BWauhzjv3GGFmXVaZkXcuVa7G/5RWV+iSPAugYfL1gQlOkXxC+E2gd/Z3/wbQIEr5RC1kyoohqlg==
-  dependencies:
-    "@types/prismjs" "^1.26.0"
 
 prismjs@^1.29.0:
   version "1.29.0"

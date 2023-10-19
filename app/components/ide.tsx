@@ -18,6 +18,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
         <div className="flex flex-grow h-screen w-screen font-sans">
             <nav suppressHydrationWarning className="flex bg-[#272922] flex-col m-0 p-0 overflow-x-hidden overflow-y-auto w-[200px] border-solid border-r border-[#00000026]">
                 <NavItem href="https://github.com/tomas-wrobel/playgist">PlayGist on GitHub</NavItem>
+                <NavItem href="/licenses" target="output">Credits</NavItem>
                 <NavDivider />
                 {children}
                 <a className="text-[#c9d1d9] cursor-pointer hover:bg-[#00000026] no-underline p-2.5 inline-block" onClick={() => {

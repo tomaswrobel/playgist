@@ -105,10 +105,9 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                 />
             </div>
             <iframe
-                src="about:blank"
-                className="flex-1 border-0 bg-white"
                 name="output"
-                onLoad={e => e.currentTarget.src === "about:blank" && transpile(e.currentTarget.contentDocument, files)}
+                className="flex-1 border-0 bg-white"
+                onLoad={e => transpile(e.currentTarget.contentDocument, files)}
             />
         </div>
     );

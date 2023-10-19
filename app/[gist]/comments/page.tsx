@@ -22,11 +22,11 @@ export default async function GistComments(props: GistProps) {
     const comments = await response.json();
 
     return (
-        <div className="text-center">
+        <div className="text-center bg-gray-700 text-white h-screen">
             <h1 className="text-2xl font-bold">Comments</h1>
             <div className="mt-5">
-                {comments.map((comment: any) => (
-                    <div className="mt-5" key={comment.id}>
+                {comments.length ? comments.map((comment: any) => (
+                    <div className="m-5" key={comment.id}>
                         <div className="text-left">
                             <Image 
                                 src={comment.user.avatar_url} 
@@ -37,11 +37,11 @@ export default async function GistComments(props: GistProps) {
                                 {comment.user.name || comment.user.login}
                             </a>
                         </div>
-                        <div className="mt-2 text-left">
+                        <div className="mt-2 text-left bg-white text-black p-4 rounded">
                             {comment.body}
                         </div>
                     </div>
-                ))}
+                )) : "No comments."}
             </div>
         </div>
     );

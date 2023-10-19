@@ -23,6 +23,10 @@ export function transpile(document: Document | null, files: Record<string, strin
         return;
     }
 
+    if (document.location.protocol !== "about:") {
+        return;
+    }
+
     release();
     
     for (const filename in files) {

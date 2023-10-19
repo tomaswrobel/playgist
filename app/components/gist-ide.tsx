@@ -78,7 +78,7 @@ function GistIDE(props: GistIDE.Props) {
             }}
         >
             <NavItem href={`https://gist.github.com/${props.gist}`} target="_blank">View on GitHub</NavItem>
-            <NavItem href="comments" target="output">Comments</NavItem>
+            <NavItem href={`/${props.gist}/comments`} target="output">Comments</NavItem>
             {props.readOnly && (
                 <form action="/api/save" method="POST" className="contents">
                     {Object.entries(files).map(([file, content], i) => (

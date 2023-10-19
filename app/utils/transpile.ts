@@ -18,7 +18,11 @@ function jsModule(js: string) {
     );
 }
 
-export function transpile(document: Document, files: Record<string, string>) {
+export function transpile(document: Document | null, files: Record<string, string>) {
+    if (!document) {
+        return;
+    }
+
     release();
     
     for (const filename in files) {

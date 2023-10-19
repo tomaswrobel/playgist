@@ -1,7 +1,8 @@
 import {cookies} from "next/headers";
 import GistIDE from "../components/gist-ide";
+import GistProps from "./props";
 
-export default async function GistPage(props: {params: Record<"gist", string>}) {
+export default async function GistPage(props: GistProps) {
     const token = cookies().get("token")?.value;
     const headers = new Headers();
 
@@ -11,7 +12,7 @@ export default async function GistPage(props: {params: Record<"gist", string>}) 
 
     let access = false;
 
-    const response = await fetch("https://api.github.com/gists/" + props.params.gist, {
+    const response = await fetch(`https://api.github.com/gists/${props.params.gist}`, {
         method: "GET",
         headers
     });

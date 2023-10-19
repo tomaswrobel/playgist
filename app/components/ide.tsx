@@ -108,7 +108,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
                 src="about:blank"
                 className="flex-1 border-0 bg-white"
                 name="output"
-                onLoad={e => e.currentTarget.contentDocument && e.currentTarget.src === "about:blank" && transpile(e.currentTarget.contentDocument, files)}
+                onLoad={e => e.currentTarget.src === "about:blank" && transpile(e.currentTarget.contentDocument, files)}
             />
         </div>
     );

@@ -80,7 +80,7 @@ function IDE({onCreatedFile, files, readOnly = false, children, onDeletedFile = 
             <div className="flex flex-col flex-1 overflow-auto">
                 <nav className="flex bg-[#383933] select-none">
                     {tabs.map(tab => (
-                        <div key={"tab-" + tab} className={`color-[#c9d1d9] p-2 ${tab === current ? "bg-[#272822]" : ""}`} onClick={() => setCurrent(tab)}>
+                        <div key={"tab-" + tab} className={`text-[#c9d1d9] p-2 ${tab === current ? "bg-[#272822]" : ""}`} onClick={() => setCurrent(tab)}>
                             <FileIcon file={tab} />
                             {tab}
                             <span className="ml-2.5 cursor-pointer" onClick={e => {

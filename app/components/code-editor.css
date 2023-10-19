@@ -16,14 +16,14 @@
 
 .code-editor .nums {
     grid-area: nums;
-    color: #F8F8F2aa;
+    color: #F8F8F2AA;
     text-align: right;
     user-select: none;
     position: sticky;
     left: 0;
 }
 
-.code-editor pre,
+.code-editor,
 .code-editor .nums {
     background: #272822;
 }

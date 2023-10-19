@@ -14,9 +14,13 @@ function CodeEditor({code = "", onChange, readonly = false, language}: CodeEdito
             <div className="nums">
                 {code.split("\n").map((_, i) => <div key={i}>{i + 1}</div>)}
             </div>
-            <pre dangerouslySetInnerHTML={{__html: Prism.highlight(code, Prism.languages[language], language)}} />
+            <pre
+                style={{color: "#F8F8F2"}} 
+                dangerouslySetInnerHTML={{__html: Prism.highlight(code, Prism.languages[language], language)}}
+            />
             {readonly || (
                 <textarea
+                    spellCheck={false}
                     value={code}
                     onChange={e => onChange(e.target.value)}
                     onKeyDown={e => {

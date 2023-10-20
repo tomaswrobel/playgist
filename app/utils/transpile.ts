@@ -4,26 +4,19 @@ const imports: Record<string, string> = {
     "npm/": "https://esm.sh/",
 };
 
-function cssModule(css: string) {
-    return `document.head.appendChild(document.createElement("style")).textContent=${JSON.stringify(css)};export{};`;
-}
+const init = 'import("init").catch(e=>window.open("/error?text="+encodeURIComponent(String(e)), "_self"))';
 
-function jsModule(js: string) {
+function file(js: string) {
     return URL.createObjectURL(
-        new File(
+        new Blob(
             [js],
-            "index.js",
             {type: "text/javascript"}
         )
     );
 }
 
 export function transpile(document: Document | null, files: Record<string, string>) {
-    if (!document) {
-        return;
-    }
-
-    if (document.location.protocol !== "about:") {
+    if (!document || document.location.protocol !== "about:") {
         return;
     }
 
@@ -75,27 +68,27 @@ export function transpile(document: Document | null, files: Record<string, strin
                 };
             }
 
-            imports[`local/${filename}`] = jsModule(js.code || "");
+            imports[`local/${filename}`] = file(js.code || "");
         } else if (ext === "css") {
-            imports[`local/${filename}`] = jsModule(cssModule(content));
+            imports[`local/${filename}`] = file(`document.head.appendChild(document.createElement("style")).textContent=${JSON.stringify(content)};export{};`);
         }
     }
 
     switch (true) {
         case "local/index.ts" in imports:
-            imports.init = jsModule('import "local/index.ts";');
+            imports.init = file('import "local/index.ts";');
             break;
         case "local/index.tsx" in imports:
-            imports.init = jsModule('import "local/index.tsx";');
+            imports.init = file('import "local/index.tsx";');
             break;
         case "local/index.js" in imports:
-            imports.init = jsModule('import "local/index.js";');
+            imports.init = file('import "local/index.js";');
             break;
         case "local/index.jsx" in imports:
-            imports.init = jsModule('import "local/index.jsx";');
+            imports.init = file('import "local/index.jsx";');
             break;
         default:
-            imports.init = jsModule('throw "No entry point found. Try to create index.js, index.ts, index.jsx or index.tsx.";');
+            imports.init = file('throw "No entry point found. Try to create index.js, index.ts, index.jsx or index.tsx.";');
             break;
     }
 
@@ -105,13 +98,7 @@ export function transpile(document: Document | null, files: Record<string, strin
     document.head.appendChild(importmap);
 
     const script = document.createElement("script");
-    script.textContent = '(async function () {\
-        try {\
-            await import("init");\
-        } catch (e) {\
-            frameElement.src = `/error?text=${encodeURIComponent(String(e))}`;\
-        }\
-    })();';
+    script.textContent = init;
 
     document.body.appendChild(script);
 }

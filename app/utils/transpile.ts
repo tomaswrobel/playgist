@@ -56,7 +56,6 @@ export function transpile(document: Document | null, files: Record<string, strin
                         },
                     ],
                     filename,
-                    minified: true,
                 });
 
                 if (!js) {

@@ -12,7 +12,7 @@ This happens on the client:
 This happens on the server:
 
 * NPM Packages transpilation ([esm.sh](https://esm.sh))
-* GitHub integration ([playgist.dev](https://playgist.dev))
+* GitHub integration ([playgist.vercel.app](https://playgist.vercel.app))
 * Storage ([gist.github.com](https://gist.github.com))
 
 ## Supported languages
@@ -42,7 +42,7 @@ This happens on the server:
 
 ## Getting Started
 
-1. Visit the PlayGist website at [playgist.dev](https://playgist.dev).
+1. Visit the PlayGist website at [playgist.vercel.app](https://playgist.vercel.app).
 2. If you want to access your own Gists, log in using your GitHub account. This can be done via `Save as a Gist` link.
 3. To open a Gist, simply type the URL in the format `playgist.dev/GIST_ID`.
 4. Edit the code as needed and run it to see the results.

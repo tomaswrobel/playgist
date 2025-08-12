@@ -1,7 +1,7 @@
 import {cookies} from "next/headers";
 
 export async function POST(request: Request) {
-    const {value} = cookies().get("token")!;
+    const {value} = (await cookies()).get("token")!;
     const {files, gist} = await request.json();
 
     return fetch(`https://api.github.com/gists/${gist}`, {

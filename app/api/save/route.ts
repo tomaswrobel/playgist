@@ -1,7 +1,7 @@
 import {cookies} from "next/headers";
 
 export async function POST(request: Request) {
-    const token = cookies().get("token")?.value;
+    const token = (await cookies()).get("token")?.value;
 
     if (!token) {
         return Response.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.CLIENT_ID}&scope=gist`);

@@ -21,7 +21,7 @@ export function transpile(document: Document | null, files: Record<string, strin
     }
 
     release();
-    
+
     for (const filename in files) {
         const content = files[filename];
         const ext = filename.slice(filename.lastIndexOf(".") + 1);

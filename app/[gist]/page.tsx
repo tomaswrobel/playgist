@@ -1,9 +1,10 @@
 import {cookies} from "next/headers";
 import GistIDE from "../components/gist-ide";
 import GistProps from "./props";
+import Link from "next/link";
 
 export default async function GistPage({params: {gist}}: GistProps) {
-    const token = cookies().get("token")?.value;
+    const token = (await cookies()).get("token")?.value;
     const headers = new Headers();
 
     if (token) {
@@ -26,9 +27,9 @@ export default async function GistPage({params: {gist}}: GistProps) {
                         Try to login
                     </a>
                 ) : (
-                    <a href="/" className="text-blue-500">
+                    <Link href="/" className="text-blue-500">
                         Go back
-                    </a>
+                    </Link>
                 )}
             </div>
         );

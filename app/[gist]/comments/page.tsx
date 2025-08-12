@@ -3,7 +3,7 @@ import {cookies} from "next/headers";
 import Image from "next/image";
 
 export default async function GistComments(props: GistProps) {
-    const token = cookies().get("token")?.value;
+    const token = (await cookies()).get("token")?.value;
     const headers = new Headers();
 
     if (token) {

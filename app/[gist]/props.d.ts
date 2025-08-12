@@ -1,5 +1,5 @@
 export default interface Props {
-    params: {
+    params: Promise<{
         gist: string;
-    };
+    }>;
 }

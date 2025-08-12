@@ -1,53 +1,58 @@
-import {cookies} from "next/headers";
+import { cookies } from "next/headers";
 import GistIDE from "../components/gist-ide";
 import GistProps from "./props";
 import Link from "next/link";
 
-export default async function GistPage({params: {gist}}: GistProps) {
-    const token = (await cookies()).get("token")?.value;
-    const headers = new Headers();
+export default async function GistPage({ params }: GistProps) {
+	const { gist } = await params;
+	const store = await cookies();
+	const token = store.get("token")?.value;
+	const headers = new Headers();
 
-    if (token) {
-        headers.append("Authorization", `Bearer ${token}`);
-    }
+	if (token) {
+		headers.append("Authorization", `Bearer ${token}`);
+	}
 
+	const response = await fetch(`https://api.github.com/gists/${gist}`, {
+		method: "GET",
+		headers,
+	});
 
-    const response = await fetch(`https://api.github.com/gists/${gist}`, {
-        method: "GET",
-        headers
-    });
+	if (!response.ok) {
+		return (
+			<div className="text-center">
+				Gist not found
+				<br />
+				{token ? (
+					<a
+						href={`https://github.com/login/oauth/authorize?client_id=${process.env.CLIENT_ID}&scope=gist`}
+					>
+						Try to login
+					</a>
+				) : (
+					<Link href="/" className="text-blue-500">
+						Go back
+					</Link>
+				)}
+			</div>
+		);
+	}
 
-    if (!response.ok) {
-        return (
-            <div className="text-center">
-                Gist not found
-                <br />
-                {token ? (
-                    <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.CLIENT_ID}&scope=gist`}>
-                        Try to login
-                    </a>
-                ) : (
-                    <Link href="/" className="text-blue-500">
-                        Go back
-                    </Link>
-                )}
-            </div>
-        );
-    }
+	const { files, owner } = await response.json();
+	let access = false;
 
-    const {files, owner} = await response.json();
-    let access = false;
+	if (token) {
+		const { login } = await fetch("https://api.github.com/user", {
+			headers,
+		}).then(response => response.json());
+		access = login === owner.login;
+	}
 
-    if (token) {
-        const {login} = await fetch("https://api.github.com/user", {headers}).then(response => response.json());
-        access = login === owner.login;
-    }
-    
-    const content: Record<string, string> = {};
+	const content: Record<string, string> = {};
 
-    for (const file in files) {
-        content[file] = files[file].content;
-    }
+	for (const file in files) {
+		content[file] = files[file].content;
+	}
 
-    return <GistIDE gist={gist} files={content} readOnly={!access} />;
+	return <GistIDE gist={gist} files={content} readOnly={!access} />;
 }
